@@ -210,9 +210,9 @@ export const getAllKols = catchAsync(async (req, res) => {
 })
 
 export const getRandomKol = catchAsync(async (req, res) => {
-    const randomKol = dailyKols[Math.floor(Math.random() * dailyKols.length)]
+    const kols = await KOL.find({})
     return res.status(200).json({
         status: 'success',
-        data: modifyData(randomKol),
+        data: modifyData(kols[Math.floor(Math.random() * kols.length)]),
     })
 })
