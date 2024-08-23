@@ -29,6 +29,12 @@ const KolSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    tweets: [
+        {
+            type: String,
+            required: true,
+        },
+    ],
 })
 
 const KOL = mongoose.model('KOL', KolSchema)
