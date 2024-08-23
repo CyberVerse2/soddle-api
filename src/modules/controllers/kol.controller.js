@@ -1,3 +1,4 @@
+import AppError from '../../common/utils/appError.js'
 import { catchAsync } from '../../common/utils/errorHandler.js'
 import KOL from '../models/kol.model.js'
 const dailyKols = [
@@ -42,7 +43,8 @@ floats will eventually come back up, if they are untethered.`,
             `Slap yourself,
 $BTC under $10 000.
 if ou sold`,
-            `e need less divide in the world. More building.`,`Will try to keep 2023 simple. Spen
+            `e need less divide in the world. More building.`,
+            `Will try to keep 2023 simple. Spen
 Don'ts.
 1. Education
 2. Compliance
@@ -429,7 +431,8 @@ It is called the United States Dollar!`,
             `Similarly, Facebook Libra's "virtual currency" will have little standing or
 dependability. If Facebook and other companies want to become a bank,
 they must seek a new Banking Charter and become subject to all Banking
-Regulations, just like other Banks, both National...`,`I am not a fan of Bitcoin and other Cryptocurrencies, which are not
+Regulations, just like other Banks, both National...`,
+            `I am not a fan of Bitcoin and other Cryptocurrencies, which are not
 money, and whose value is highly volatile and based on thin air.
 Unregulated Crypto Assets can facilitate unlawful behavior, including
 drug trade and other illegal activity....`,
@@ -538,8 +541,12 @@ export const getRandomKol = catchAsync(async (req, res) => {
 
 export const getRandomTweet = catchAsync(async (req, res) => {
     const { kolId } = req.body
+    if (!kolId) {
+        throw new AppError('Please provide a kolId', 400)
+    }
     const kol = await KOL.findById(kolId)
-    const randomKolTweet = kol.tweets[Math.floor(Math.random() * kol.tweets.length)]
+    const randomKolTweet =
+        kol.tweets[Math.floor(Math.random() * kol.tweets.length)]
     return res.status(200).json({
         status: 'success',
         data: {
